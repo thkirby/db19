@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Create a User Profile</title>
+        <title>Edison user page</title>
     </head>
     <body>
         <h1>Let's create a profile</h1>
-        {% if user is not defined %}
-        <form action="something" method="post">
-            Add Credit Card Info: <input type="text" name="creditCard">
-            Add Phone Number: <input type="text" name="phoneNumber">
-            Add email: <input type="text" name="phoneNumber">
-            Rider/Driver option: <input type="text" name="rideDrive">
-            <input type="submit" value="Submit Info">
+        {% if userName is not defined %}
+        <form action="{{ url_for('user_profile') }}" method="post">
+            Add Credit Card Info: <input type="text" name="creditCard"><br>
+            Add Phone Number: <input type="text" name="phoneNumber"><br>
+            Add email: <input type="text" name="email"><br>
+            Rider/Driver option: <input type="text" name="rideDrive"><br>
+            <input type="submit" value="Submit">
         </form>
         {% else %}
-            
+            Your credit-card is: {{creditCard}}<br>
+            Your Phone number is: {{phoneNumber}}<br>
+            Your email is: {{email}}<br>
+            Your Username is: {{userName}}
+        {% endif %}
     </body>
 </html>
