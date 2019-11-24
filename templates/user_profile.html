@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Create a User Profile</title>
+    </head>
+    <body>
+        <h1>Let's create a profile</h1>
+        {% if user is not defined %}
+        <form action="something" method="post">
+            Add Credit Card Info: <input type="text" name="creditCard">
+            Add Phone Number: <input type="text" name="phoneNumber">
+            Add email: <input type="text" name="phoneNumber">
+            Rider/Driver option: <input type="text" name="rideDrive">
+            <input type="submit" value="Submit Info">
+        </form>
+        {% else %}
+            
+    </body>
+</html>
