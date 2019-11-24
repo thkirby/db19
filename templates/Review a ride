@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>Review a Ride</title>
+  </head>
+  <body>
+    <h1>Enter Customer ID</h1>
+        <form>
+        First name:
+        <input type="text" name="ID"><br>
+        Submission type:
+        <select>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        </select>
+        </form>
+  </body>
+</html>

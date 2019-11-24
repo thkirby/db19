@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <title>Report an Incident</title>
+  </head>
+  <body>
+    <h1>Assign incident ID</h1>
+        <form>
+        Enter Car ID:
+        <input type="text" carID="carID"><br>
+        Enter Customer ID:
+        <input type="text" custID="custID"><br>
+        </form>
+  </body>
+</html>
