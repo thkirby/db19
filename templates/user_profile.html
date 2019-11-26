@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Edison user page</title>
+        <title>Edison Create User page</title>
     </head>
     <body>
         <h1>Let's create a profile</h1>
-        {% if userName is not defined %}
-        <form action="{{ url_for('user_profile') }}" method="post">
-            Add Credit Card Info: <input type="text" name="creditCard"><br>
-            Add Phone Number: <input type="text" name="phoneNumber"><br>
-            Add email: <input type="text" name="email"><br>
-            Rider/Driver option: <input type="text" name="rideDrive"><br>
-            <input type="submit" value="Submit">
-        </form>
-        {% else %}
-            Your credit-card is: {{creditCard}}<br>
-            Your Phone number is: {{phoneNumber}}<br>
-            Your email is: {{email}}<br>
-            Your Username is: {{userName}}
+        {% if step=="compose_entry"%}
+            <form action="{{ url_for('user_profile') }}" method="post">
+                First Name: <input type="text" name="firstName"><br><br>
+                Last Name: <input type="text" name="lastName"><br><br>
+                Account info(credit Card #): <input type="text" name="creditCard"><br><br>
+                Phone Number: <input type="text" name="phoneNumber"><br><br>
+                Email: <input type="text" name="email"><br><br>
+                <input type="hidden" name="step" value="add_entry">
+                <input type="submit" value="Submit">
+            </form>
+        {% elif step == "create_user" %}
+            Your user profile has been added to the Database
+            <a href="{{ url_for('index') }}">Back to Homepage</a>
         {% endif %}
     </body>
 </html>
