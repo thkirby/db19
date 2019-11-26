@@ -1,53 +1,50 @@
-drop table if exists Customer;
+drop table if exists Customer cascade;
 create table Customer(
     custid serial primary key not null,
     firstName varchar(50) not null,
-    lastName varchar(50) not null
-    paymentInfo serial not null,
-    phoneNumber int not null,
-    email varchar(50) not null,
-    
+    lastName varchar(50) not null,
+    accountInfo varchar(100) not null,
+    phoneNumber varchar(50) not null,
+    email varchar(50) not null
 );
 
 drop table if exists Submission;
 create table Submission(
     subID serial primary key not null,
     custID int not null,  
-    typeofSub varchar(50) not null,
+    typeofSub varchar(50) not null
 );
 
 drop table if exists Car;
 create table Car(
     carID serial primary key not null,
     latitude float not null,
-    longitude float not null,
-    statusOf varchar(100) not null,
+    longitude float not null
 );
 
-drop table if exists Reservation;
+drop table if exists Reservation cascade;
 create table Reservation(
-    timeOfRes timestamp with time zone not null default now(),
+    timeOfRes varchar(50) not null,
     place varchar(50) not null,
     resID serial primary key not null,
-    custID serial primary key not null references Customer,
-    carID serial primary key not null references Car
+    custID serial not null,
+    carID serial not null
 );
 
-drop table if exists Incident;
+drop table if exists Incident cascade;
 create table Incident(
     incidentID int primary key not null,
-    carID serial primary key not null references Car,
-    custid serial primary key not null references Customer,
-
+    carID int not null,
+    custid int not null
 );
 
-drop table if exists Rides;
+drop table if exists Rides cascade;
 create table Rides(
-    custid serial primary key not null references Customer,
-    carID serial primary key not null references Car,
-    startTime timestamp with time zone not null default now(),
-    endTime timestamp with time zone,
-    dateOfRide timestamp with time zone
+    custid int not null,
+    carID int not null,
+    startTime varchar(50) not null default now(),
+    endTime varchar(50),
+    dateOfRide varchar(50) 
 );
 
 drop table if exists Stations;
@@ -55,7 +52,7 @@ create table Stations(
     stationID serial primary key not null,
     available boolean not null,
     stationLocation varchar(50) not null,
-    energyConsumption float not null,
+    energyConsumption float not null
 );
 
 drop table if exists Routes;
@@ -63,14 +60,14 @@ create table Routes(
     routeID serial primary key,
     carID int not null,
     startLocation varchar(100) not null,
-    endLocation varchar(100) not null,
+    endLocation varchar(100) not null
 );
 
-drop table if exists traffic;
+drop table if exists traffic cascade;
 create table traffic(
     density int,
-    carID serial primary key not null references Car,
-    routeID serial primary key references Routes
+    carID int not null,
+    routeID int
 );
 
 insert into Customer (custid, firstName, lastName, accountInfo, phoneNumber, email) values (1, 'Sandy', 'Leafe', '4041597329226', '628-827-6291', 'sleafe0@yelp.com');
