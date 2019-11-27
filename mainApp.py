@@ -4,7 +4,7 @@ import psycopg2.extras
 from flask import Flask, request, render_template, g
 
 # PostgreSQL IP address
-IP_ADDR = "104.197.159"
+IP_ADDR = "104.197.159.139"
 # Create the application
 app = Flask(__name__)
 
@@ -22,9 +22,15 @@ def user_profile():
 
     elif request.form["step"] == "create_user":
         db = get_db()
-        cursor = db.cursor()
-        cursor.execute("insert into customer (custid, firstname, lastname, accountinfo, phonenumber, email) values (%d, %s, %s, %s, %s, %s)", [request.form['firstName'], request.form['lastName'],request.form['accountinfo'],request.form['phonenumber'], request.form['email']])
+        cursor1 = db.cursor()
+        cursor2 = db.cursor()
+        cursor1.execute("select max(custid) from customer")
+        custid1 = (cursor1.fetchone())[0]
 
+        custid1 += 1
+        print("before")
+        cursor2.execute("insert into customer (custid, firstname, lastname, accountinfo, phonenumber, email) values (%s, %s, %s, %s, %s, %s)", [custid1, request.form['firstName'], request.form['lastName'],request.form['creditCard'],request.form['phoneNumber'], request.form['email']])
+        print("after")
         db.commit()
         return render_template("user_profile.html", step="create_user")
 
@@ -84,3 +90,4 @@ def debug(s):
     if FLASK_DEBUG is set."""
     if app.config['DEBUG']:
         print(s)
+
