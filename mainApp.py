@@ -1,6 +1,8 @@
 import os
+from datetime import datetime
 import psycopg2
 import psycopg2.extras
+import random
 from flask import Flask, request, render_template, g
 
 # PostgreSQL IP address
@@ -12,6 +14,73 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return render_template("index.html")
+
+
+@app.route("/see_rides", methods=['get', 'post'])
+def see_rides():
+    if "step" not in request.form:
+        return render_template("see_rides.html", step="see_rides")
+
+    elif request.form["step"] == "show_rides":
+        db = get_db()
+        cursor2 = db.cursor()
+
+        # talk about adding another column to the car table so it isnt so... dumb
+        cursor2.execute("select * from rides where custid=(%s)", [request.form['userID']])
+        rowlist = cursor2.fetchall()
+        print("after")
+        return render_template("see_rides.html", step="show_rides", entries=rowlist)
+
+
+@app.route("/schedule_ride", methods=['get', 'post'])
+def schedule_ride():
+    if "step" not in request.form:
+        return render_template("schedule_ride.html", step="scheduled")
+
+    elif request.form["step"] == "schedule_ride":
+        db = get_db()
+        cursor1 = db.cursor()
+        cursor2 = db.cursor()
+        cursor3 = db.cursor()
+        cursor1.execute("select max(carid) from car")
+        cursor2.execute("select max(resid) from reservation")
+        resID = (cursor2.fetchone())[0]
+        resID += 1
+        upper = (cursor1.fetchone())[0]
+        carid = random.randint(1, upper)
+
+        now = datetime.now()
+        current_time = now.strftime("%H:%M:%S")
+
+        print("before")
+        # talk about adding another column to the car table so it isnt so... dumb
+        cursor2.execute("insert into reservation (timeofres, place, resid, custid, carid) values (%s, %s, %s, %s, %s)", [request.form['pickupTime'], request.form['address'], resID, request.form['userID'], carid])
+        print("after")
+        db.commit()
+        return render_template("add_car.html", added="add_car")
+
+
+# This route is for adding a car to our database
+# All it takes in is your longitude and latitude and assigns a Car ID
+@app.route("/add_car", methods=['get', 'post'])
+def add_car():
+    if "added" not in request.form:
+        return render_template("add_car.html", added="create_entry")
+
+    elif request.form["added"] == "add_car":
+        db = get_db()
+        cursor1 = db.cursor()
+        cursor2 = db.cursor()
+        cursor1.execute("select max(carid) from car")
+        custid1 = (cursor1.fetchone())[0]
+
+        custid1 += 1
+        print("before")
+        # talk about adding another column to the car table so it isnt so... dumb
+        cursor2.execute("insert into car (carid, latitude, longitude) values (%s, %s, %s)", [custid1, request.form['latitude'], request.form['longitude']])
+        print("after")
+        db.commit()
+        return render_template("add_car.html", added="add_car")
 
 
 @app.route("/user", methods=['get', 'post'])

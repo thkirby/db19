@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>See Past/Future Rides</title>
+    </head>
+    <body>
+      <h1> See Past and Future Rides:</h1>
+      {% if step=="see_rides" %}
+        <form action="{{ url_for('see_rides') }}" method="post">
+            Enter User ID: <input type= "text" name="userID"><br><br>
+            <input type="hidden" name="step" value="show_rides">
+            <input type="submit" value="Submit">
+        </form>
+      {% elif step=="show_rides" %}
+        {% if entries|length > 0 %}
+            <table border="1">
+                <tr><td></td><td>Car Id</td> <td>End Time</td> <td>Date of Ride</td></tr>
+                {% for entry in entries %}
+                    <tr><td>{{ entry.cardid }}</td><td>{{ entry.endtime }}</td><td>{{ entry.dateofride }}</td></tr>
+                {% endfor %}
+            </table>
+            <a href="{{ url_for('index') }}">Back to Homepage</a>
+        {% else %}
+            There are no rides for this User ID
+
+            <a href="{{ url_for('index') }}">Back To Homepage</a>
+        {% endif %}
+      {% endif %}
+    </body>
+</html>

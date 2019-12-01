@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Schedule A Ride</title>
+    </head>
+    <body>
+        <h1>Lets schedule a Ride!</h1>
+        {% if step=="scheduled" %}
+            <form action="{{ url_for('schedule_ride') }}" method="post">
+                User ID: <input type="text" name="userID"><br><br>
+                Pickup Address: <input type="text" name="address"><br><br>
+                Pickup Time: <input type="text" name="pickupTime"><br><br>
+                <input type="hidden" name="step" value="schedule_ride">
+                <input type="submit" value="Submit">
+            </form>
+        {% elif step=="schedule_ride" %}
+            Your ride has been scheduled!
+            <a href="{{ url_for('index') }}">Back To Homepage</a>
+        {% endif %}    
+    </body>
+</html>
