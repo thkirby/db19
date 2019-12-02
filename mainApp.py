@@ -103,6 +103,33 @@ def user_profile():
         db.commit()
         return render_template("user_profile.html", step="create_user")
 
+@app.route("/review", methods=['get', 'post'])
+def review_a_ride():
+    ID = int(request.form["ID"])
+    value = int(request.form["value"])
+    return render_template("review.html", ID = ID, value=value)
+
+@app.route("/report", methods=['get', 'post'])
+def report_an_incident():
+    #assign incident ID
+    #if "incident_ID" not in request.form:
+    #   return render_template("report.html", incidentID = "create_incID")
+    #elif request.form["incident_ID"] == "create_incID":
+    #    db = get_db()
+    #    cursor1 = db.cursor()
+    #    cursor2 = db.cursor()
+    #    cursor1.execute("select max(incidentID) from Incident")
+    #    incidentID1 = (cursor1.fetchone())[0]
+
+    #    incidentID += 1
+    #    cursor2.execute("insert into customer (incidentID, carID, custid) values (%s, %s, %s)", [incidentID1, request.form['carID'], request.form['custid'])
+    #    db.commit()
+    #    return render_template("report.html", step="create_incID")
+    
+    carID = int(request.form["carID"])
+    custID = int(request.form["custID"])
+    return render_template("report.html", carID="carID", custID="custID")
+
 
 #####################################################
 # Database handling
