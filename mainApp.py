@@ -49,12 +49,12 @@ def schedule_ride():
         upper = (cursor1.fetchone())[0]
         carid = random.randint(1, upper)
 
-        now = datetime.now()
-        current_time = now.strftime("%H:%M:%S")
+        # now = datetime.now()
+        # current_time = now.strftime("%H:%M:%S")
 
         print("before")
         # talk about adding another column to the car table so it isnt so... dumb
-        cursor2.execute("insert into reservation (timeofres, place, resid, custid, carid) values (%s, %s, %s, %s, %s)", [request.form['pickupTime'], request.form['address'], resID, request.form['userID'], carid])
+        cursor3.execute("insert into reservation (timeofres, place, resid, custid, carid) values (%s, %s, %s, %s, %s)", [request.form['pickupTime'], request.form['address'], resID, request.form['userID'], carid])
         print("after")
         db.commit()
         return render_template("add_car.html", added="add_car")
