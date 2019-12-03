@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>Report an Incident</title>
+  </head>
+  <body>
+    <h1>Please go fuck youself!</h1>
+        {% if incidentID=="inc_report"%}
+            <form action="{{ url_for('report') }}" method="post">
+                Enter Car ID:<input type="text" name="carid"><br>
+                 Enter Customer ID: <input type="text" name="custid"><br>
+                <input type="hidden" name="incidentID" value="create_incID">
+                <input type="submit" value="Submit">
+            </form>
+        {% elif incidentID=="create_incID"%}
+            Your Incident has been added to the Database
+            <a href="{{ url_for('index') }}">Back to Homepage</a>
+        {% endif %}
+  </body>
+</html>
