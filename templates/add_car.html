@@ -8,8 +8,10 @@
         <h1>Add Car details</h1>
         {% if added=="create_entry" %}
             <form action="{{ url_for('add_car') }}" method="POST">
-                Add Car longitude: <input type="text" name="longitude"><br><br>
-                Add Car Latitude: <input type="text" name="latitude"><br><br>
+                Add Car VIN: <input type="text" name="carvin"><br><br>
+                Add Car Address: <input type="text" name="address"><br><br>
+                Add Car Model: <input type="text" name="model"><br><br>
+                Add Car Make: <input type="text" name="make"><br><br>
                 <input type="hidden" name="added" value="add_car">
                 <input type="submit" value="Submit">
 
@@ -17,7 +19,7 @@
 
         {% elif added=="add_car" %}
         <p>Your car has been added to our Database</p>
-        <a href="{{url_for('index')}}"
+        <a href="{{ url_for('index') }}">Back to Homepage</a>
 
         {% endif %}
     </body>

@@ -77,10 +77,25 @@ def add_car():
         custid1 += 1
         print("before")
         # talk about adding another column to the car table so it isnt so... dumb
-        cursor2.execute("insert into car (carid, latitude, longitude) values (%s, %s, %s)", [custid1, request.form['latitude'], request.form['longitude']])
+        cursor2.execute("insert into car (carid, caraddress, carmake, carmodel, carvin) values (%s, %s, %s, %s, %s)", [custid1, request.form['address'], request.form['make'], request.form['model'], request.form['carvin']])
         print("after")
         db.commit()
         return render_template("add_car.html", added="add_car")
+
+@app.route("/delete_car", methods=['get','post'])
+def delete_car():
+    if "step" not in request.form:
+        return render_template("delete_car.html", step="delete_entry")
+
+    elif request.form['step'] == "delete_final":
+        db = get_db()
+        cursor1 = db.cursor()
+        carid = int(request.form['carid'])
+        carvin = request.form['carvin']
+
+        cursor1.execute("delete from car where carid=%s", [carid])
+        db.commit()
+        return render_template("delete_car.html", step="delete_final")
 
 
 @app.route("/user", methods=['get', 'post'])
@@ -186,4 +201,3 @@ def debug(s):
     if FLASK_DEBUG is set."""
     if app.config['DEBUG']:
         print(s)
-
