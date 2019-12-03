@@ -118,6 +118,7 @@ def user_profile():
         db.commit()
         return render_template("user_profile.html", step="create_user")
 
+
 @app.route("/review", methods=['get', 'post'])
 def review_a_ride():
     ID = int(request.form["ID"])
@@ -127,20 +128,20 @@ def review_a_ride():
 
 @app.route("/report", methods=['get', 'post'])
 def report():
-    if "incident_ID" not in request.form:
-        return render_template("report.html", incidentID = "inc_report")
+    if "step" not in request.form:
+        return render_template("report.html", step="inc_report")
 
-    elif request.form["incident_ID"] == "create_incID":
+    elif request.form["step"] == "create_incID":
         db = get_db()
         cursor1 = db.cursor()
         cursor2 = db.cursor()
-        cursor1.execute("select max(incidentid) from Incident")
-        incidentID1 = (cursor1.fetchone())[0]
+        cursor1.execute("select max(incidentid) from incident")
+        incident_id1 = (cursor1.fetchone())[0]
 
-        incidentID1 += 1
-        cursor2.execute("insert into incident (incidentid, carid, custid) values (%s, %s, %s)", [incidentID1, request.form['carid'], request.form['custid']])
+        incident_id1 += 1
+        cursor2.execute("insert into incident (incidentid, carid, custid) values (%s, %s, %s)", [incident_id1, request.form['carid'], request.form['custid']])
         db.commit()
-        return render_template("report.html", incident_ID="create_incID")
+        return render_template("report.html", step="create_incID")
 
 
 #####################################################
